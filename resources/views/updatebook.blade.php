@@ -52,11 +52,20 @@
                     <input type="text" class="form-control mb-3"  name="nama_author" value="{{$kategoriById['author']['nama_author']}}" placeholder="" >
 
                     <span>Profile Author</span>
-                    <input type="file" class="form-control" name="file" id="inputGroupFile02">
+                    <input type="file" class="form-control mb-3" name="file" id="fileFoto">
+
+                    <img id="foto" src="" alt="" width="200">
                 </div>
             <button type="submit" class="btn btn-primary mt-4">Update</button>
         </div>
     </form>
     </div>
 </div>
+
+<script>
+    $("#fileFoto").on('change', function(e){
+        console.log('okk')
+        $("#foto").attr("src", URL.createObjectURL(e.target.files[0]));
+    })
+</script>
 @endsection
