@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class CreateController extends Controller
 {
-    
-    function store(Request $request)
+    public function store(Request $request)
     {
         $payload = [
             'kode_buku' => $request->input("kode_buku"),
@@ -21,12 +20,12 @@ class CreateController extends Controller
             'id_author' => $request->input("id_author"),
         ];
 
-        $author = HttpClient::fetch("POST", "http://localhost:8000/api/book", $payload);
+        $author = HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/book", $payload);
 
         return redirect()->route("home");
     }
 
-    function authorCategori(Request $request)
+    public function authorCategori(Request $request)
     {
         $payloadKategori = [
             'nama_kategori' => $request->input("nama_kategori")
@@ -41,13 +40,13 @@ class CreateController extends Controller
         ];
 
 
-        $t1=HttpClient::fetch("POST", "http://localhost:8000/api/categori", $payloadKategori);
-        $t2=HttpClient::fetch("POST", "http://localhost:8000/api/author", $payloadAuthor, $files);
+        $t1=HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/categori", $payloadKategori);
+        $t2=HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/author", $payloadAuthor, $files);
 
         return redirect()->back();
     }
 
-    function updateAuCate(Request $request, $id)
+    public function updateAuCate(Request $request, $id)
     {
         $payloadKategori = [
             'nama_kategori' => $request->input("nama_kategori")
@@ -55,7 +54,7 @@ class CreateController extends Controller
 
         $files = [];
 
-        if(isset($request->file)) {
+        if (isset($request->file)) {
             $files = [
                 'file'=> $request->file('file')
             ];
@@ -63,7 +62,7 @@ class CreateController extends Controller
 
         $kategoriId = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/books/".$id
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/books/".$id
         );
         $idKategori = $kategoriId['data']['id_kategori'];
         $idAuthor = $kategoriId['data']['id_author'];
@@ -73,13 +72,13 @@ class CreateController extends Controller
         ];
 
 
-        $t1=HttpClient::fetch("POST", "http://localhost:8000/api/categori/".$idKategori, $payloadKategori);
-        $t2=HttpClient::fetch("POST", "http://localhost:8000/api/author/".$idAuthor, $payloadAuthor, $files);
+        $t1=HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/categori/".$idKategori, $payloadKategori);
+        $t2=HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/author/".$idAuthor, $payloadAuthor, $files);
 
         return redirect()->back();
     }
 
-    function updateBook(Request $request, $id)
+    public function updateBook(Request $request, $id)
     {
         $payload = [
             'kode_buku' => $request->input("kode_buku"),
@@ -91,9 +90,8 @@ class CreateController extends Controller
         ];
 
 
-        HttpClient::fetch("POST", "http://localhost:8000/api/book/".$id, $payload);
+        HttpClient::fetch("POST", "https://eb84-113-11-180-57.ap.ngrok.io/api/book/".$id, $payload);
 
         return redirect()->route('home');
     }
-
 }

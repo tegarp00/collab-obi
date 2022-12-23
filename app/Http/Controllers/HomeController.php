@@ -6,11 +6,11 @@ use App\Helpers\HttpClient;
 
 class HomeController extends Controller
 {
-    function index()
+    public function index()
     {
         $responsePengguna = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/books"
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/books"
         );
         $books = $responsePengguna["data"];
         return view('home', [
@@ -18,15 +18,15 @@ class HomeController extends Controller
         ]);
     }
 
-    function createBook()
+    public function createBook()
     {
         $author = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/authors"
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/authors"
         );
         $kategori = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/categories"
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/categories"
         );
         $kategori = $kategori["data"];
         $authors = $author["data"];
@@ -36,19 +36,19 @@ class HomeController extends Controller
         ]);
     }
 
-    function update($id)
+    public function update($id)
     {
         $author = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/authors"
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/authors"
         );
         $kategori = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/categories"
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/categories"
         );
         $kategoriId = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/books/".$id
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/books/".$id
         );
         $kategori = $kategori["data"];
         $authors = $author["data"];
@@ -59,22 +59,19 @@ class HomeController extends Controller
         ]);
     }
 
-    function destroy($id)
+    public function destroy($id)
     {
-
-        HttpClient::fetch("DELETE", "http://localhost:8000/api/book/".$id);
+        HttpClient::fetch("DELETE", "https://eb84-113-11-180-57.ap.ngrok.io/api/book/".$id);
         return redirect()->route('home');
-
     }
 
-    function detail($id)
+    public function detail($id)
     {
         $bookId = HttpClient::fetch(
             "GET",
-            "http://localhost:8000/api/books/".$id
+            "https://eb84-113-11-180-57.ap.ngrok.io/api/books/".$id
         );
 
         return view('detailbook', compact('bookId'));
     }
-
 }
