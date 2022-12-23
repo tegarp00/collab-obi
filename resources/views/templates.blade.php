@@ -30,3 +30,4 @@
 </nav>
 @yield('content')
 </body>
+// makasih bg 
